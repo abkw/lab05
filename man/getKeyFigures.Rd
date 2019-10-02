@@ -2,7 +2,7 @@
 % Please edit documentation in R/getKeyFigures.R
 \name{getKeyFigures}
 \alias{getKeyFigures}
-\title{Get Key figures}
+\title{getKeyFigures}
 \usage{
 getKeyFigures(search_item)
 }
@@ -13,7 +13,10 @@ getKeyFigures(search_item)
 
 }
 \description{
-get data from the API
+get data from the API.
+}
+\details{
+Get Key figures
 }
 \examples{
 

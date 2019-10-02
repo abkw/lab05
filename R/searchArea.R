@@ -6,7 +6,7 @@ library(utils)
 #'
 #' @title searchArea
 #'
-#' @description get data from the API
+#' @description get data from the API.
 #' @name searchArea
 #' @param search_area Search text about search municipal area name
 #'

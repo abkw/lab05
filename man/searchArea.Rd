@@ -13,7 +13,7 @@ searchArea(search_area)
 Area Information about Municipility
 }
 \description{
-get data from the API
+get data from the API.
 }
 \details{
 Search Area Information

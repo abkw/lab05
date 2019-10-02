@@ -4,7 +4,9 @@ library(utils)
 
 #' Get Key figures
 #'
-#' @description get data from the API
+#' @title getKeyFigures
+#'
+#' @description get data from the API.
 #'
 #' @param search_item search string
 #'
