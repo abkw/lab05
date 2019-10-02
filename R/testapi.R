@@ -1,6 +1,6 @@
-library(httr)
-library(jsonlite)
-library(lubridate)
+# library(httr)
+# library(jsonlite)
+# library(lubridate)
 ##
 ## Attaching package: 'jsonlite'
 ##
@@ -8,11 +8,11 @@ library(lubridate)
 ##
 ##     View
 
-url  <- "http://api.kolada.se/v1/"
-path <- "v1/municipality"
-query <- "page=4&per_page=77"
-raw.result <- GET(url = url, path = path, query = query)
-print(names(raw.result$status_code))
-result <- fromJSON(rawToChar(raw.result$content))
-print(result)
-print(typeof(result))
+# url  <- "http://api.kolada.se/v1/"
+# path <- "v1/municipality"
+# query <- "page=4&per_page=77"
+# raw.result <- GET(url = url, path = path, query = query)
+# print(names(raw.result$status_code))
+# result <- fromJSON(rawToChar(raw.result$content))
+# print(result)
+# print(typeof(result))
