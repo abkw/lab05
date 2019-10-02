@@ -1,16 +1,20 @@
 library(httr)
 library(jsonlite)
+library(utils)
 
-
-#' Get jey figures
+#' Get Key figures
 #'
-#' @param search_item
+#' @description get data from the API
+#'
+#' @param search_item search string
 #'
 #' @return
 #'
-#' @import httr jsonlite
+#' @import httr jsonlite utils
 #'
 #' @examples
+#'
+#' @export
 #'
 
 getKeyFigures <- function(search_item) {

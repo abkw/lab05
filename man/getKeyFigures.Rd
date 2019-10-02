@@ -2,18 +2,18 @@
 % Please edit documentation in R/getKeyFigures.R
 \name{getKeyFigures}
 \alias{getKeyFigures}
-\title{Get jey figures}
+\title{Get Key figures}
 \usage{
 getKeyFigures(search_item)
 }
 \arguments{
-\item{search_item}{}
+\item{search_item}{search string}
 }
 \value{
 
 }
 \description{
-Get jey figures
+get data from the API
 }
 \examples{
 

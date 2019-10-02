@@ -1,18 +1,22 @@
+library(httr)
+library(jsonlite)
+library(utils)
+
 #' Search Area Information
 #'
 #' @title searchArea
+#'
+#' @description get data from the API
 #' @name searchArea
-#' @param search_area
+#' @param search_area Search text about search municipal area name
 #'
 #' @return Area Information about Municipility
 #'
-#' @import httr jsonlite
+#' @import httr jsonlite utils
 #'
-#' @examples
-#' searchArea("Lin")
+#' @export
+#'
 
-library(httr)
-library(jsonlite)
 
 searchArea <- function(search_area) {
   if(typeof(search_area)!= "character") {

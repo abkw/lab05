@@ -3,15 +3,18 @@
 \name{searchArea}
 \alias{searchArea}
 \title{searchArea}
+\usage{
+searchArea(search_area)
+}
 \arguments{
-\item{search_area}{}
+\item{search_area}{Search text about search municipal area name}
 }
 \value{
 Area Information about Municipility
 }
 \description{
-Search Area Information
+get data from the API
 }
-\examples{
-searchArea("Lin")
+\details{
+Search Area Information
 }
