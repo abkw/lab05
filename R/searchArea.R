@@ -29,6 +29,8 @@ searchArea <- function(search_area) {
 
   raw_result <- GET(url = base_URL, path = search_path)
 
-  # print(raw_result)
-  # print(fromJSON(rawToChar(raw_result$content)))
+  print(raw_result)
+  print(fromJSON(rawToChar(raw_result$content)))
 }
+
+# searchArea("stoc")

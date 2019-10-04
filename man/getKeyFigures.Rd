@@ -10,14 +10,11 @@ getKeyFigures(search_item)
 \item{search_item}{search string}
 }
 \value{
-
+Test getKeyFigures func
 }
 \description{
 get data from the API.
 }
 \details{
 Get Key figures
-}
-\examples{
-
 }

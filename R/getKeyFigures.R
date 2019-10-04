@@ -10,11 +10,10 @@ library(utils)
 #'
 #' @param search_item search string
 #'
-#' @return
+#' @return Test getKeyFigures func
 #'
 #' @import httr jsonlite utils
 #'
-#' @examples
 #'
 #' @export
 #'
