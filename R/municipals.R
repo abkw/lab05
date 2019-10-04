@@ -24,7 +24,7 @@ municipals <- setRefClass(Class =  "municipals",
                         all_council_data = "data.frame",
                         all_municipal_data = "data.frame",
                         ou_data = "data.frame",
-                        kpi_df = "data.frame",
+                        kpi_data = "data.frame",
                         selected_municipal = "character"
                       ),
 
@@ -35,7 +35,7 @@ municipals <- setRefClass(Class =  "municipals",
                           selected_municipal <<- ""
                           all_data <<- as.data.frame(getAllData())
                           ou_data <<- as.data.frame(getOuData())
-                          kpi_df <<- as.data.frame(getKpiData())
+                          kpi_data <<- as.data.frame(getKpiData())
                           all_council_data <<- as.data.frame(getAllCouncilData())
                           all_municipal_data <<- as.data.frame(getAllMunicipalData())
                         },
@@ -169,7 +169,7 @@ municipals <- setRefClass(Class =  "municipals",
                             else if("ou" %in% input$categoryId)
                               selectedChoices <- as.character(ou_df[,"title"])
                             else
-                            selectedChoices <- as.character(kpi_df[,"title"])
+                            selectedChoices <- as.character(kpi_data[,"title"])
                             updateSelectInput(session,"dataId",choices =  selectedChoices)
 
                         })
