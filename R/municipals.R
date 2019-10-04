@@ -24,6 +24,7 @@ municipals <- setRefClass(Class =  "municipals",
                         all_council_data = "data.frame",
                         all_municipal_data = "data.frame",
                         ou_data = "data.frame",
+                        kpi_df = "data.frame",
                         selected_municipal = "character"
                       ),
 
@@ -34,6 +35,7 @@ municipals <- setRefClass(Class =  "municipals",
                           selected_municipal <<- ""
                           all_data <<- as.data.frame(getAllData())
                           ou_data <<- as.data.frame(getOuData())
+                          kpi_df <<- as.data.frame(getKpiData())
                           all_council_data <<- as.data.frame(getAllCouncilData())
                           all_municipal_data <<- as.data.frame(getAllMunicipalData())
                         },
@@ -58,16 +60,36 @@ municipals <- setRefClass(Class =  "municipals",
                           ou_df <- data.frame("id" = ids, "municipality" = municipality, "title" = titles)
                           return(ou_df)
                         },
-                        # getKpiData = function() {
-                        #   search_string <- ""
-                        #   search_path <- paste("v2/ou",search_string, sep = "")
-                        #   raw_result <- GET(url = base_URL, path = search_path)
-                        #   ids <- fromJSON(rawToChar((raw_result$content)))$value$id
-                        #   titles <- fromJSON(rawToChar((raw_result$content)))$value$title
-                        #   types <- fromJSON(rawToChar((raw_result$content)))$value$type
-                        #   kpi_df <- data.frame("id" = ids, "title" = titles, "type" = types)
-                        #   return(kpi_df)
-                        # },
+                        getKpiData = function() {
+                          search_string <- ""
+                          search_path <- paste("v2/kpi",search_string, sep = "")
+                          raw_result <- GET(url = base_URL, path = search_path)
+                          auspices <- fromJSON(rawToChar((raw_result$content)))$value$auspices
+                          description <- fromJSON(rawToChar((raw_result$content)))$value$description
+                          has_ou_data <- fromJSON(rawToChar((raw_result$content)))$value$has_ou_data
+                          id <- fromJSON(rawToChar((raw_result$content)))$value$id
+                          is_divided_by_gender <- fromJSON(rawToChar((raw_result$content)))$value$is_divided_by_gender
+                          municipality_type <- fromJSON(rawToChar((raw_result$content)))$value$municipality_type
+                          operating_area <- fromJSON(rawToChar((raw_result$content)))$value$operating_area
+                          ou_publication_date <- fromJSON(rawToChar((raw_result$content)))$value$ou_publication_date
+                          perspective <- fromJSON(rawToChar((raw_result$content)))$value$perspective
+                          prel_publication_date <- fromJSON(rawToChar((raw_result$content)))$value$prel_publication_date
+                          publ_period <- fromJSON(rawToChar((raw_result$content)))$value$publ_period
+                          publication_date <- fromJSON(rawToChar((raw_result$content)))$value$publication_date
+                          title <- fromJSON(rawToChar((raw_result$content)))$value$title
+                          kpi_df <- data.frame("id" = id,
+                                               "is_divided_by_gender" = is_divided_by_gender,
+                                               "title" = title,
+                                               "municipality_type" = municipality_type,
+                                               "operating_area" = operating_area,
+                                               "ou_publication_date" = ou_publication_date,
+                                               "perspective" = perspective,
+                                               "prel_publication_date" = prel_publication_date,
+                                               "publ_period" = publ_period,
+                                               "publication_date" = publication_date
+                                               )
+                          return(kpi_df)
+                        },
                         getAllCouncilData = function() {
                           council_data <- all_data[which(all_data$type == "L"),]
                           return(council_data)
@@ -118,7 +140,10 @@ municipals <- setRefClass(Class =  "municipals",
                                             choices = as.character(df[,"title"])),
                                 selectInput(inputId = "dataseet",
                                             label = "Select Data:",
-                                            choices = c("one","two","three"))
+                                            choices = c("one","two","three")),
+                                dateInput(inputId = "askDate",
+                                            label = "Here we ask for changes made to data in this request from 2015-02-28.",
+                                            format = "yyyy-mm-dd")
 
                               ),
 
@@ -144,7 +169,7 @@ municipals <- setRefClass(Class =  "municipals",
                             else if("ou" %in% input$categoryId)
                               selectedChoices <- as.character(ou_df[,"title"])
                             else
-                            selectedChoices <- c("not", "not", "not")
+                            selectedChoices <- as.character(kpi_df[,"title"])
                             updateSelectInput(session,"dataId",choices =  selectedChoices)
 
                         })
@@ -154,10 +179,7 @@ municipals <- setRefClass(Class =  "municipals",
                                  "ou" = ou,
                                  "kpi" = kpi)
                         })
-                        # output$summary <- renderPrint({
-                        #   dataset <- datasetInput()
-                        #   summary(dataset)
-                        # })
+
                         output$view <- renderText({
                           paste("You have selected: \n", getMunicipalData(input$dataId))
                         })
@@ -173,6 +195,6 @@ municipals <- setRefClass(Class =  "municipals",
 item <- municipals$new()
 item$all_municipal_data["title"]
 item$getMunicipalData("Ale")
-item$getOuData()
+item$getKpiData()
 item$createShiny()
 
