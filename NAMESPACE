@@ -2,6 +2,8 @@
 
 export(getKeyFigures)
 export(searchArea)
+exportClasses(municipals)
 import(httr)
 import(jsonlite)
+import(methods)
 import(utils)
