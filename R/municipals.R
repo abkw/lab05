@@ -62,11 +62,98 @@ municipals <- setRefClass(Class =  "municipals",
                           search_path <- paste("v2/municipality?title=",search_string, sep = "")
                           raw_result <- GET(url = base_URL, path = search_path)
                           return(fromJSON(rawToChar((raw_result$content)))$value)
+                        },
+                        createShiny = function(){
+                        # df <- data.frame(matrix(unlist(all_municipal_data), nrow=length(all_municipal_data),byrow=T,stringsAsFactors=FALSE))
+                         df <- as.data.frame(all_municipal_data)
+                      print(as.numeric(df[,"id"]))
+                      print(as.character(df[,"title"]))
+
+                          # print(df)
+                          # print(filter(df),id=1)
+                          library(shiny)
+                      # library(tidyverse)
+
+                          # Define UI for dataset viewer app ----
+                          ui <- fluidPage(
+
+                            # App title ----
+                            titlePanel("Municipal Data"),
+
+                            # Sidebar layout with a input and output definitions ----
+                            sidebarLayout(
+
+                              # Sidebar panel for inputs ----
+                              sidebarPanel(
+
+                                # Input: Selector for choosing dataset ----
+                                # radioButtons("typeInput", "Select data you want to display",
+                                #              choices = c("municipality", "kpi", "ou"),
+                                #              selected = "municipality"),
+                                selectInput(inputId = "categoryId",
+                                            label = "Select a Category:",
+                                            choices = c("municipality", "kpi", "ou")),
+                                selectInput(inputId = "dataId",
+                                            label = "Select a Municipal:",
+                                            choices = as.character(df[,"title"])), tableOutput("data"),
+                                selectInput(inputId = "dataset",
+                                            label = "Select Data:",
+                                            choices = c("rock", "pressure", "cars")),
+                                # Input: Numeric entry for number of obs to view ----
+                                numericInput(inputId = "obs",
+                                             label = "Number of observations to view:",
+                                             value = 10)
+                              ),
+
+                              # Main panel for displaying outputs ----
+                              mainPanel(
+
+                                # Output: Verbatim text for data summary ----
+                                verbatimTextOutput("summary"),
+
+                                # Output: HTML table with requested number of observations ----
+                                tableOutput("view")
+
+                              )
+                            )
+                          )
+
+                          # Define server logic to summarize and view selected dataset ----
+                          server <- function(input, output) {
+
+                            # Return the requested dataset ----
+                            datasetInput <- reactive({
+                              switch(input$dataset,
+                                     "rock" = rock,
+                                     "pressure" = pressure,
+                                     "cars" = cars)
+                            })
+
+                            # Generate a summary of the dataset ----
+                            output$summary <- renderPrint({
+                              dataset <- datasetInput()
+                              summary(dataset)
+                            }
+                            )
+
+                              mainPanel(
+                                DT::dataTableOutput("table")
+                              )
+                            # Show the first "n" observations ----
+                            # output$view <- renderTable({
+                            #   head(datasetInput(), n = input$obs)
+                            # })
+
+                          }
+
+                          # Create Shiny app ----
+                          shinyApp(ui = ui, server = server)
                         }
 
                       )
 )
 
-# item <- municipals()
-# item$all_municipal_data
-# item$getMunicipalData("link")
+item <- municipals()
+item$all_municipal_data["title"]
+item$getMunicipalData("link")
+item$createShiny()
