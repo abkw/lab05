@@ -17,6 +17,10 @@ Imports:
     httr,
     jsonlite,
     utils,
-    methods
+    methods,
+    shiny
 Suggests:
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
