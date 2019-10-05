@@ -25,7 +25,8 @@ municipals <- setRefClass(Class =  "municipals",
                         all_municipal_data = "data.frame",
                         ou_data = "data.frame",
                         kpi_data = "data.frame",
-                        selected_municipal = "character"
+                        selected_municipal = "character",
+                        selectedValue = "data.frame"
                       ),
 
                       methods = list(
@@ -120,7 +121,7 @@ municipals <- setRefClass(Class =  "municipals",
                           ui <- fluidPage(
 
                             # App title ----
-                            titlePanel("Municipal Data"),
+                            titlePanel("Kolada API"),
 
                             # Sidebar layout with a input and output definitions ----
                             sidebarLayout(
@@ -138,9 +139,6 @@ municipals <- setRefClass(Class =  "municipals",
                                 selectInput(inputId = "dataId",
                                             label = "Select a Municipal:",
                                             choices = as.character(df[,"title"])),
-                                selectInput(inputId = "dataseet",
-                                            label = "Select Data:",
-                                            choices = c("one","two","three")),
                                 dateInput(inputId = "askDate",
                                             label = "Here we ask for changes made to data in this request from 2015-02-28.",
                                             format = "yyyy-mm-dd")
@@ -155,7 +153,9 @@ municipals <- setRefClass(Class =  "municipals",
                                 verbatimTextOutput("summary"),
 
                                 # Output: HTML table with requested number of observations ----
-                                tableOutput("view")
+                                tableOutput("view"),
+                                dataTableOutput("kpi_output")
+
 
                               )
                             )
@@ -163,16 +163,27 @@ municipals <- setRefClass(Class =  "municipals",
 
                           # Define server logic to summarize and view selected dataset ----
                       server = function(input, output, session) {
+                        library(DT)
+
                         observe({
-                          if ("municipality" %in% input$categoryId)
-                            selectedChoices <- as.character(df[,"title"])
+
+                          if ("municipality" %in% input$categoryId){
+                             selectedChoices <- as.character(df[,"title"])
+                             selectedValue <<- df
+                            }
                             else if("ou" %in% input$categoryId)
+                            {
                               selectedChoices <- as.character(ou_df[,"title"])
+                              selectedValue <<- ou_df
+                            }
                             else
                             selectedChoices <- as.character(kpi_data[,"title"])
+                            selectedValue <<- kpi_data
                             updateSelectInput(session,"dataId",choices =  selectedChoices)
 
+
                         })
+
                         datasetInput <- reactive({
                           switch(input$dataId,
                                  "categoryId" = categoryId,
@@ -180,9 +191,11 @@ municipals <- setRefClass(Class =  "municipals",
                                  "kpi" = kpi)
                         })
 
-                        output$view <- renderText({
-                          paste("You have selected: \n", getMunicipalData(input$dataId))
-                        })
+                        # output$view <- renderText({
+                        #   paste("You have selected: \n", getMunicipalData(input$dataId))
+                        # })
+                        #output$view <- renderTable(selectedValue)
+                        output$kpi_output <- renderDataTable(selectedValue)
                       }
 
                           # Create Shiny app ----
@@ -197,4 +210,5 @@ item$all_municipal_data["title"]
 item$getMunicipalData("Ale")
 item$getKpiData()
 item$createShiny()
+print(item$selectedValue)
 
