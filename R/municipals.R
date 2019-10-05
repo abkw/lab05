@@ -15,7 +15,7 @@ library(shiny)
 #'
 #' @import httr utils methods shiny
 #' @importFrom jsonlite fromJSON
-#' @return information about municipilities
+#' @return User can browse Municipal data through Shiny Application
 #' @export
 #'
 municipals <- setRefClass(Class =  "municipals",
@@ -52,7 +52,15 @@ municipals <- setRefClass(Class =  "municipals",
                               return(municpal_dataframe)
                             },
 
-                            getOuData = function(municipalId = as.character, search_text = as.character) {
+                            getOuData = function(municipalId = as.numeric, search_text = as.character) {
+
+                              if(typeof(municipalId)!= "character") {
+                                stop("Illegal Municipal ID!")
+                              }
+
+                              if(typeof(search_text)!= "character") {
+                                stop("Illegal search text!")
+                              }
 
                               search_string <- URLencode(search_text, reserved = TRUE)
                               search_path <- paste("v2/ou?municipality=",municipalId, "&title=", search_string, sep = "")
@@ -66,6 +74,10 @@ municipals <- setRefClass(Class =  "municipals",
                             },
 
                             getKpiData = function(search_text = as.character) {
+
+                              if(typeof(search_text)!= "character") {
+                                stop("Illegal Search Text!")
+                              }
 
                               search_string <- URLencode(search_text, reserved = TRUE)
                               search_path <- paste("v2/kpi?title=",search_string, sep = "")
@@ -110,6 +122,11 @@ municipals <- setRefClass(Class =  "municipals",
                             },
 
                             getMunicipalData = function(search_name = as.character) {
+
+                              if(typeof(search_name)!= "character") {
+                                stop("Illegal Search Text!")
+                              }
+
                               search_string <- URLencode(search_name, reserved = TRUE)
                               search_path <- paste("v2/municipality?title=",search_string, sep = "")
                               raw_result <- GET(url = base_URL, path = search_path)

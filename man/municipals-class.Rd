@@ -6,7 +6,7 @@
 \alias{municipals}
 \title{municipals RC class}
 \value{
-information about municipilities
+User can browse Municipal data through Shiny Application
 }
 \description{
 This is a RC class for handle municipal data
