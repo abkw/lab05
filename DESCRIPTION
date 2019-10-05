@@ -17,6 +17,7 @@ Imports:
     httr,
     jsonlite,
     utils,
-    methods
+    methods,
+    shiny
 Suggests:
     testthat
