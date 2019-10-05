@@ -259,11 +259,3 @@ municipals <- setRefClass(Class =  "municipals",
                           )
 )
 
-item <- municipals$new()
-#item$all_municipal_data["title"]
-#item$getMunicipalData("Ale")
-#item$getKpiData()
-item$createShiny()
-# item$createMyShiny()
-#print(item$selectedValue)
-

@@ -1,0 +1,91 @@
+---
+title: "Municipals Vignette"
+author: "Mohammed Bakheet, Chathuranga Silva and Nikodimos Gezahegn"
+date: "05th October 2019"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{municipals}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(lab05)
+```
+
+# Fitting Linear Models
+
+``` municipals ``` is used to get Municipal data from the  'Kolada' API. It can be used to Search All Municipal in Sweden, Search Institutes in Sweden and Search Institutes within a specific Munipality. User can search data from the Shiny Application
+
+# Usage
+```c
+
+ item <- municipals$new()
+ item$createShiny()
+
+```
+
+
+# Value
+
+An object of class ``` municipals ``` is a list containing at least the following components:
+
+base_URL
+  : Base URL for Kolada API.
+  
+all_data
+  : All available Municipal Data(Including County Councils).
+  
+all_council_data
+  : All available Country Council data.
+  
+all_municipal_data
+  : All available Municipal data.
+  
+selected_municipal
+  : Selected Municipal Name.
+  
+  
+# Methods
+
+getAllData()
+  : Retrieve All Country and Municipal Data.
+  
+getOuData(municipalId, search_text)
+  : Retrieve Institutes title includes search_text in given municipal.
+  
+getKpiData(search_text)
+  : Retrieve All Institues data which title includes search_text.
+
+getAllCouncilData()
+  : Retrieve all Council data.
+  
+getAllMunicipalData()
+  : Retrieve all Municipal data.
+
+getMunicipalData(search_name)
+  : Retrieve Municipal which title include data search_name.
+  
+createShiny()
+  : Create Shiny app and show on browser.
+
+# References
+
+Kolada :- "https://www.kolada.se/index.php?_p=index#"
+Rolada API Doc :- "https://github.com/Hypergene/kolada"
+
+# Examples
+
+```
+item <- municipals$new()
+item$getMunicipalData("Ale")
+item$getKpiData()
+item$createShiny()
+```
