@@ -16,7 +16,13 @@ library(shiny)
 #' @import httr utils methods shiny
 #' @importFrom jsonlite fromJSON
 #' @return User can browse Municipal data through Shiny Application
-#' @export
+#' @export municipals
+#'
+#' @example
+#' item <- municipals$new()
+#' item$getMunicipalData("Ale")
+#' item$getKpiData()
+#' item$createShiny()
 #'
 municipals <- setRefClass(Class =  "municipals",
 
